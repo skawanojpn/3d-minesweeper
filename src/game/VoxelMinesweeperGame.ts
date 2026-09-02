@@ -529,7 +529,7 @@ export class VoxelMinesweeperGame {
 
   rotateCamera(direction: number): void {
     sfx.playRotate();
-    this.targetRotationY += (direction * Math.PI) / 2;
+    this.targetRotationY += (direction * Math.PI) / 4;
   }
 
   getCellFromClientPos(clientX: number, clientY: number): Block | null {
