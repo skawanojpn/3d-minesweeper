@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import type { Block, Board, PitchAngle } from './types';
 import { generateProceduralHeights } from '../terrain/generateHeights';
 import { getExposedFaces, get3DNeighbors } from './board';
+import { populateMines as populateMinesLogic } from './mines';
 import { updateBlockMaterials } from '../render/materials';
 import { createFlagPinMesh } from '../render/flagPin';
 import { sfx } from '../audio/SoundFX';
@@ -194,10 +195,14 @@ export class VoxelMinesweeperGame {
     const btn = document.getElementById('btn-xray');
     if (this.isXRayActive) {
       if (label) label.innerText = '透視 ON';
-      if (btn) btn.className = 'px-2 py-1 bg-purple-600 active:scale-95 text-white font-bold rounded-lg transition-all flex items-center gap-1 border border-purple-400 shadow';
+      if (btn)
+        btn.className =
+          'px-2 py-1 bg-purple-600 active:scale-95 text-white font-bold rounded-lg transition-all flex items-center gap-1 border border-purple-400 shadow';
     } else {
       if (label) label.innerText = '透視 OFF';
-      if (btn) btn.className = 'px-2 py-1 bg-slate-800 hover:bg-slate-700 active:scale-95 text-purple-300 font-bold rounded-lg transition-all flex items-center gap-1 border border-slate-700';
+      if (btn)
+        btn.className =
+          'px-2 py-1 bg-slate-800 hover:bg-slate-700 active:scale-95 text-purple-300 font-bold rounded-lg transition-all flex items-center gap-1 border border-slate-700';
     }
 
     this.activeBlocks.forEach((b) => this.updateBlockMaterials(b));
@@ -303,28 +308,7 @@ export class VoxelMinesweeperGame {
 
   // 初回クリック後の地雷配置 (初手＆その周囲を100%保証)
   populateMines(firstClickedBlock: Block): void {
-    const safeNeighbors = this.get3DNeighbors(firstClickedBlock);
-    const forbidden = new Set<string>();
-    forbidden.add(`${firstClickedBlock.x},${firstClickedBlock.y},${firstClickedBlock.z}`);
-    safeNeighbors.forEach((n) => forbidden.add(`${n.x},${n.y},${n.z}`));
-
-    const candidates = this.activeBlocks.filter((b) => !forbidden.has(`${b.x},${b.y},${b.z}`));
-    for (let i = candidates.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [candidates[i], candidates[j]] = [candidates[j], candidates[i]];
-    }
-
-    const countToPlace = Math.min(this.activeMines, candidates.length);
-    for (let i = 0; i < countToPlace; i++) {
-      candidates[i].isMine = true;
-    }
-
-    this.activeBlocks.forEach((b) => {
-      if (b.isMine) return;
-      const neighbors = this.get3DNeighbors(b);
-      b.neighborMines = neighbors.filter((n) => n.isMine).length;
-    });
-
+    populateMinesLogic(firstClickedBlock, this.activeBlocks, this.board, this.gridSize, this.maxHeight, this.activeMines);
     this.startTimer();
   }
 

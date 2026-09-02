@@ -6,14 +6,18 @@ export function initUiEvents(game: VoxelMinesweeperGame): void {
 
   btnDig.addEventListener('click', () => {
     game.currentMode = 'dig';
-    btnDig.className = 'flex-1 py-2 px-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-1 transition-all shadow-lg ring-2 ring-emerald-500 bg-emerald-600 text-white';
-    btnFlag.className = 'flex-1 py-2 px-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-1 transition-all bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700';
+    btnDig.className =
+      'flex-1 py-2 px-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-1 transition-all shadow-lg ring-2 ring-emerald-500 bg-emerald-600 text-white';
+    btnFlag.className =
+      'flex-1 py-2 px-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-1 transition-all bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700';
   });
 
   btnFlag.addEventListener('click', () => {
     game.currentMode = 'flag';
-    btnFlag.className = 'flex-1 py-2 px-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-1 transition-all shadow-lg ring-2 ring-rose-500 bg-rose-600 text-white';
-    btnDig.className = 'flex-1 py-2 px-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-1 transition-all bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700';
+    btnFlag.className =
+      'flex-1 py-2 px-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-1 transition-all shadow-lg ring-2 ring-rose-500 bg-rose-600 text-white';
+    btnDig.className =
+      'flex-1 py-2 px-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-1 transition-all bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700';
   });
 
   document.getElementById('btn-pitch')!.addEventListener('click', () => game.cyclePitchAngle());
