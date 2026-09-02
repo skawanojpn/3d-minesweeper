@@ -255,7 +255,7 @@ export class VoxelMinesweeperGame {
             mesh.receiveShadow = true;
 
             const edgeGeo = new THREE.EdgesGeometry(this.boxGeometry);
-            const edgeMat = new THREE.LineBasicMaterial({ color: 0x050505 });
+            const edgeMat = new THREE.LineBasicMaterial({ color: 0x14100c, transparent: true, opacity: 0.55 });
             const wireframe = new THREE.LineSegments(edgeGeo, edgeMat);
             mesh.add(wireframe);
 

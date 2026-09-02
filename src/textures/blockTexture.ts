@@ -7,15 +7,12 @@ export function getUnrevealedTopTexture(): THREE.CanvasTexture {
   canvas.width = 128;
   canvas.height = 128;
   const ctx = canvas.getContext('2d')!;
-  ctx.fillStyle = '#1e3a1b';
+  // 縁取り分の下地(境界線の色)
+  ctx.fillStyle = '#1b3318';
   ctx.fillRect(0, 0, 128, 128);
-  ctx.fillStyle = '#2d5a27';
-  ctx.fillRect(8, 8, 112, 112);
+  // 本体を敷き詰め、外周にのみ細い縁を残す
   ctx.fillStyle = '#3a7332';
-  ctx.fillRect(16, 16, 96, 96);
-  ctx.strokeStyle = '#529648';
-  ctx.lineWidth = 4;
-  ctx.strokeRect(18, 18, 92, 92);
+  ctx.fillRect(3, 3, 122, 122);
   const tex = new THREE.CanvasTexture(canvas);
   textureCache.unrevealedTop = tex;
   return tex;
@@ -27,15 +24,15 @@ export function getUnrevealedSideTexture(): THREE.CanvasTexture {
   canvas.width = 128;
   canvas.height = 128;
   const ctx = canvas.getContext('2d')!;
-  ctx.fillStyle = '#271911';
+  // 縁取り分の下地(境界線の色)
+  ctx.fillStyle = '#231710';
   ctx.fillRect(0, 0, 128, 128);
+  // 土壁本体
   ctx.fillStyle = '#452b1e';
-  ctx.fillRect(6, 6, 116, 116);
-  ctx.fillStyle = '#2d5a27';
-  ctx.fillRect(6, 6, 116, 20);
-  ctx.strokeStyle = '#5a3d2e';
-  ctx.lineWidth = 4;
-  ctx.strokeRect(8, 8, 112, 112);
+  ctx.fillRect(3, 3, 122, 122);
+  // 上部の草冠(縁取りの内側に収める)
+  ctx.fillStyle = '#3a7332';
+  ctx.fillRect(3, 3, 122, 18);
   const tex = new THREE.CanvasTexture(canvas);
   textureCache.unrevealedSide = tex;
   return tex;
